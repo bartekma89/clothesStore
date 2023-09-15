@@ -1,6 +1,6 @@
 import { ProductList } from "./components/organisms/ProductList";
 import { Header } from "./components/atoms/Header";
-import { ProductListType } from "./types";
+import { type ProductListType } from "./types";
 
 const products: ProductListType[] = [
   {

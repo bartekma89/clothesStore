@@ -1,4 +1,4 @@
-import { ProductListType } from "@/app/types";
+import { type ProductListType } from "@/app/types";
 import { ProductsListItem } from "@/app/components/molecules";
 
 interface ProductListProps {
