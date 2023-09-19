@@ -1,7 +1,8 @@
 import { type Metadata } from "next";
 import { Rubik } from "next/font/google";
 
-import { Header, Footer } from "@/app/components/atoms/";
+import { Footer } from "@/components/atoms";
+import { Header } from "@/components/organisms";
 
 import "./globals.css";
 
@@ -17,11 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={rubik.className}>
 				<main>
 					<section>
+						<Header />
 						<div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-							<Header />
 							{children}
-							<Footer />
 						</div>
+						<Footer />
 					</section>
 				</main>
 			</body>

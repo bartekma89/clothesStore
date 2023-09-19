@@ -21,7 +21,9 @@
 			}
 		],
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@/components/*": ["./src/components/*"],
+			"@/routes/*": ["./src/app/*"]
 		},
 		"allowUnreachableCode": true,
 		"noUnusedLocals": true,
