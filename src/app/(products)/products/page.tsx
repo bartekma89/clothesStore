@@ -1,49 +1,24 @@
+import { Suspense } from "react";
+
 import { ProductList } from "@/components/organisms/ProductList";
 import { type ProductListType } from "@/types";
 
-const products: ProductListType[] = [
-	{
-		id: "1",
-		name: "T-shirt",
-		price: 1234,
-		category: "Shirt",
-		coverImage: {
-			alt: "T-shirt green",
-			src: "/pic-1.jpg",
+const getProducts = async () => {
+	const res = await fetch("http:/localhost:4000/products", {
+		next: {
+			revalidate: 0,
 		},
-	},
-	{
-		id: "2",
-		name: "Robot",
-		price: 143,
-		category: "Toy",
-		coverImage: {
-			alt: "robot toy",
-			src: "/pic-2.jpg",
-		},
-	},
-	{
-		id: "3",
-		name: "Nike",
-		price: 112,
-		category: "Shoes",
-		coverImage: {
-			alt: "shoes nike",
-			src: "/pic-3.jpg",
-		},
-	},
-	{
-		id: "4",
-		name: "Headphone",
-		price: 133,
-		category: "Headphone",
-		coverImage: {
-			alt: "headphone",
-			src: "/pic-4.jpg",
-		},
-	},
-];
+	});
 
-export default function Home() {
-	return <ProductList products={products} />;
+	return res.json() as Promise<ProductListType[]>;
+};
+
+export default async function Home() {
+	const products = await getProducts();
+
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<ProductList products={products} />;
+		</Suspense>
+	);
 }

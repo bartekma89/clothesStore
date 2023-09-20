@@ -11,7 +11,7 @@ export function ProductsListItem({ product }: ProductListItemProps) {
 	return (
 		<li>
 			<article>
-				<Link href="#" className="group block overflow-hidden">
+				<Link href={`/products/${product.id}`} className="group block overflow-hidden">
 					<ProductCoverImage {...product.coverImage} />
 					<ProductListItemDescription product={product} />
 				</Link>
