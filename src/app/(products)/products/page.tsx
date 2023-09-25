@@ -1,16 +1,10 @@
 import { Suspense } from "react";
 
 import { ProductList } from "@/components/organisms/ProductList";
-import { type ProductListType } from "@/types";
+import { getProducts } from "@/lib/api/products";
 
-const getProducts = async () => {
-	const res = await fetch("http:/localhost:4000/products", {
-		next: {
-			revalidate: 0,
-		},
-	});
-
-	return res.json() as Promise<ProductListType[]>;
+export const metadata = {
+	title: "Products Page",
 };
 
 export default async function Home() {

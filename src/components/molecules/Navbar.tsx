@@ -18,7 +18,6 @@ export function Navbar() {
 						</li>
 					);
 				})}
-
 			</ul>
 		</nav>
 	);

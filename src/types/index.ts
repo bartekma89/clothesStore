@@ -2,14 +2,18 @@ import { type Route } from "next";
 
 export interface ProductListType {
 	id: string;
-	name: string;
+	title: string;
 	price: number;
-	category: string;
-	coverImage: {
-		src: string;
-		alt: string;
-	};
 	description: string;
+	category: string;
+	rating: Rating;
+	image: string;
+	longDescription: string;
+}
+
+export interface Rating {
+	rate: number;
+	count: number;
 }
 
 export interface MenuOptions {

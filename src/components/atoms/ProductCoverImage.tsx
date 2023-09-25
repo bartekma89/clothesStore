@@ -1,6 +1,9 @@
-import { type ProductListType } from "@/types";
+interface ComponentProps {
+	alt: string;
+	src: string;
+}
 
-export function ProductCoverImage({ alt, src }: ProductListType["coverImage"]) {
+export function ProductCoverImage({ alt, src }: ComponentProps) {
 	return (
 		<img
 			src={src}
