@@ -15,7 +15,7 @@ export function ProductsListItem({ product }: ProductListItemProps) {
 		<li>
 			<article>
 				<Link
-					href={`/products/${product.id}`}
+					href={`/product/${product.id}`}
 					className="group block overflow-hidden"
 				>
 					<ProductCoverImage alt={product.title} src={product.image} />

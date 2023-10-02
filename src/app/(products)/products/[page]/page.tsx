@@ -10,9 +10,28 @@ export const metadata = {
 	title: "Products Page",
 };
 
-export default async function Home() {
-	const { hasPrevPage, perPage, pageNumber } = getPaginationSettings();
-	const products = await getProducts(perPage);
+export async function generateStaticParams() {
+	const products = await getProducts(undefined, "300");
+	const numbersOfPage = Math.ceil(products.length / 4);
+	const pages = Array.from({ length: numbersOfPage }, (_, i) => {
+		return i;
+	});
+
+	return pages.map((page) => ({
+		page: page.toString(),
+	}));
+}
+
+export default async function ProductsPage({
+	params,
+}: {
+	params: { page: string };
+}) {
+	const { hasPrevPage, offset, perPage, pageNumber } = getPaginationSettings(
+		params.page,
+	);
+
+	const products = await getProducts(perPage, offset);
 
 	if (Number(pageNumber) < 1) {
 		redirect("/products/1");

@@ -22,7 +22,10 @@ export function ActiveLink<T extends string>({
 	exact = true,
 }: ComponentProps<T>) {
 	const pathname = usePathname();
-	const isActive = exact ? pathname === href : false;
+
+	const isActive = exact
+		? pathname === href && pathname.startsWith(href)
+		: false;
 
 	return (
 		<Link className={clsx(className, isActive && activeClassName)} href={href}>
