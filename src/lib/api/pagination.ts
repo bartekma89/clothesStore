@@ -13,8 +13,6 @@ export const getPagination = async (skip: number, take?: number) => {
 		hasNextPage = productsConnection.pageInfo.pageSize > 0;
 	}
 
-	console.log(productsConnection.pageInfo.pageSize);
-
 	return {
 		...productsConnection.pageInfo,
 		hasNextPage,

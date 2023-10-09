@@ -1,5 +1,5 @@
-import { type ProductListType } from "@/types";
 import { ProductsListItem } from "@/components/molecules";
+import { type ProductListType } from "@/types";
 
 interface ProductListProps {
 	products: ProductListType[];

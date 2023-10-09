@@ -2,8 +2,14 @@ import { type Metadata } from "next";
 
 import { getProduct, getProducts } from "@/lib/api/products";
 
+type ParamsProps = {
+	params: {
+		productId: string;
+	};
+};
+
 export async function generateStaticParams() {
-	const products = await getProducts();
+	const products = await getProducts(10, 0);
 
 	return products.map(({ id }) => ({
 		productId: id,
@@ -12,9 +18,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
 	params,
-}: {
-	params: { productId: string };
-}): Promise<Metadata> {
+}: ParamsProps): Promise<Metadata> {
 	const product = await getProduct(params.productId);
 
 	return {
@@ -23,11 +27,7 @@ export async function generateMetadata({
 	};
 }
 
-export default async function ProductPage({
-	params,
-}: {
-	params: { productId: string };
-}) {
+export default async function ProductPage({ params }: ParamsProps) {
 	const product = await getProduct(params.productId);
 
 	return (

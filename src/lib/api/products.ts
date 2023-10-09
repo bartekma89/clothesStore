@@ -1,28 +1,43 @@
+import { notFound } from "next/navigation";
+
+import { executeGraphql } from "@/lib/executeGraphql";
 import { type ProductListType } from "@/types";
+import { ProductsGetListDocument, ProductGetByIdDocument } from "@/gql/graphql";
 
-export const getProducts = async (take?: string, offset?: string) => {
-	const url = new URL("https://naszsklep-api.vercel.app/api/products");
+export const getProducts = async (
+	take?: number,
+	skip?: number,
+): Promise<ProductListType[]> => {
+	const { products } = await executeGraphql(ProductsGetListDocument, {
+		take,
+		skip,
+	});
 
-	if (take) {
-		url.searchParams.set("take", String(take));
-	}
-	if (offset) {
-		url.searchParams.set("offset", String(offset));
-	}
-	const res = await fetch(
-		url.href,
-
-		{
-			cache: "no-cache",
-		},
-	);
-
-	return res.json() as Promise<ProductListType[]>;
+	return products.map((product) => ({
+		title: product.name,
+		category: product.categories[0]?.name ?? "",
+		description: product.description,
+		id: product.id,
+		image: product.images[0]?.url ?? "",
+		price: product.price,
+	}));
 };
 
 export async function getProduct(id: string) {
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products/${id}`,
-	);
-	return res.json() as Promise<ProductListType>;
+	const { product } = await executeGraphql(ProductGetByIdDocument, {
+		id,
+	});
+
+	if (!product) {
+		throw notFound();
+	}
+
+	return {
+		title: product.name,
+		category: product.categories[0]?.name ?? "",
+		description: product.description,
+		id: product.id,
+		image: product.images[0]?.url ?? "",
+		price: product.price,
+	};
 }

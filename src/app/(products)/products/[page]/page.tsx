@@ -4,15 +4,16 @@ import { redirect } from "next/navigation";
 import { ProductList } from "@/components/organisms/ProductList";
 import { getProducts } from "@/lib/api/products";
 import { Pagination } from "@/components/organisms";
-import { getPaginationSettings } from "@/lib/getPaginationSettings";
+import { getPagination } from "@/lib/api/pagination";
+import { ITEMS_PER_PAGE } from "@/config";
 
 export const metadata = {
 	title: "Products Page",
 };
 
 export async function generateStaticParams() {
-	const products = await getProducts(undefined, "300");
-	const numbersOfPage = Math.ceil(products.length / 4);
+	const products = await getProducts(10, 0);
+	const numbersOfPage = Math.ceil(products.length / 10);
 	const pages = Array.from({ length: numbersOfPage }, (_, i) => {
 		return i;
 	});
@@ -27,19 +28,25 @@ export default async function ProductsPage({
 }: {
 	params: { page: string };
 }) {
-	const { hasPrevPage, offset, perPage, pageNumber } = getPaginationSettings(
-		params.page,
-	);
+	const pageNumber = Number(params.page);
+	const skip =
+		pageNumber === 1 ? 0 : pageNumber * ITEMS_PER_PAGE - ITEMS_PER_PAGE;
 
-	const products = await getProducts(perPage, offset);
-
-	if (Number(pageNumber) < 1) {
+	if (pageNumber < 1) {
 		redirect("/products/1");
 	}
 
+	const { hasNextPage, hasPreviousPage } = await getPagination(skip);
+
+	const products = await getProducts(10, skip);
+
 	return (
 		<>
-			<Pagination page={pageNumber} hasPrevPage={hasPrevPage} />
+			<Pagination
+				page={pageNumber}
+				hasNextPage={hasNextPage}
+				hasPreviousPage={hasPreviousPage}
+			/>
 			<Suspense fallback={<div>Loading...</div>}>
 				<ProductList products={products} />;
 			</Suspense>
