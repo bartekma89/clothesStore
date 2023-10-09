@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { executeGraphql } from "@/lib/executeGraphql";
+import { executeGraphql } from "@/lib/api/executeGraphql";
 import { type ProductListType } from "@/types";
 import { ProductsGetListDocument, ProductGetByIdDocument } from "@/gql/graphql";
 

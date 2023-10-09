@@ -9,4 +9,16 @@ export const menuOptions: MenuOptions[] = [
 		name: "All",
 		href: "/products",
 	},
+	{
+		name: "Hoodies",
+		href: "/categories/hoodies",
+	},
+	{
+		name: "T-Shirts",
+		href: "/categories/t-shirts",
+	},
+	{
+		name: "Accessories",
+		href: "/categories/accessories",
+	},
 ];

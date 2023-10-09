@@ -1,5 +1,5 @@
 import { PaginationDocument } from "@/gql/graphql";
-import { executeGraphql } from "@/lib/executeGraphql";
+import { executeGraphql } from "@/lib/api/executeGraphql";
 
 export const getPagination = async (skip: number, take?: number) => {
 	const { productsConnection } = await executeGraphql(PaginationDocument, {
