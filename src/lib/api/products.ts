@@ -1,26 +1,15 @@
 import { notFound } from "next/navigation";
 
 import { executeGraphql } from "@/lib/api/executeGraphql";
-import { type ProductListType } from "@/types";
 import { ProductsGetListDocument, ProductGetByIdDocument } from "@/gql/graphql";
 
-export const getProducts = async (
-	take?: number,
-	skip?: number,
-): Promise<ProductListType[]> => {
+export const getProducts = async (take?: number, skip?: number) => {
 	const { products } = await executeGraphql(ProductsGetListDocument, {
 		take,
 		skip,
 	});
 
-	return products.map((product) => ({
-		title: product.name,
-		category: product.categories[0]?.name ?? "",
-		description: product.description,
-		id: product.id,
-		image: product.images[0]?.url ?? "",
-		price: product.price,
-	}));
+	return products;
 };
 
 export async function getProduct(id: string) {
@@ -32,12 +21,5 @@ export async function getProduct(id: string) {
 		throw notFound();
 	}
 
-	return {
-		title: product.name,
-		category: product.categories[0]?.name ?? "",
-		description: product.description,
-		id: product.id,
-		image: product.images[0]?.url ?? "",
-		price: product.price,
-	};
+	return product;
 }

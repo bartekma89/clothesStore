@@ -22,7 +22,7 @@ export async function generateMetadata({
 	const product = await getProduct(params.productId);
 
 	return {
-		title: product.title,
+		title: product.name,
 		description: product.description,
 	};
 }
@@ -33,16 +33,18 @@ export default async function ProductPage({ params }: ParamsProps) {
 	return (
 		<div>
 			<div className="relative h-[350px] sm:h-[450px]">
-				<img
-					src={product.image}
-					alt=""
-					className="absolute inset-0 h-full w-full object-contain"
-				/>
+				{product.images[0] && (
+					<img
+						src={product.images[0].url}
+						alt=""
+						className="absolute inset-0 h-full w-full object-contain"
+					/>
+				)}
 			</div>
 
 			<div className="mt-3">
 				<h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
-					{product.title}
+					{product.name}
 				</h3>
 
 				<p className="mt-1.5 max-w-[40ch] text-xs text-gray-500">

@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-import { type ProductListType } from "@/types";
+import { type ProductListItemFragment } from "@/gql/graphql";
 import {
 	ProductCoverImage,
 	ProductListItemDescription,
 } from "@/components/atoms";
 
 interface ProductListItemProps {
-	product: ProductListType;
+	product: ProductListItemFragment;
 }
 
 export function ProductsListItem({ product }: ProductListItemProps) {
@@ -18,7 +18,9 @@ export function ProductsListItem({ product }: ProductListItemProps) {
 					href={`/product/${product.id}`}
 					className="group block overflow-hidden"
 				>
-					<ProductCoverImage alt={product.title} src={product.image} />
+					{product.images[0] && (
+						<ProductCoverImage alt={product.name} src={product.images[0].url} />
+					)}
 					<ProductListItemDescription product={product} />
 				</Link>
 			</article>
