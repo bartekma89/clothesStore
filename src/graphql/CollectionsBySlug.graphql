@@ -1,0 +1,24 @@
+query CollectionGetBySlug($collectionId: String!) {
+	collections(where: { slug: $collectionId }) {
+		id
+		name
+		description
+
+		image {
+			width
+			height
+			url
+		}
+		products {
+			id
+			name
+			price
+			slug
+			images {
+				width
+				height
+				url
+			}
+		}
+	}
+}

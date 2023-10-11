@@ -1,7 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
-export default function DashboardPage() {
+import { CollectionsList } from "@/components/organisms";
+
+export const metadata = {
+	title: "Products Page",
+};
+
+export default async function DashboardPage() {
 	return (
 		<div className="grid gap-6 text-center">
 			<h1 className=" text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
@@ -15,6 +21,11 @@ export default function DashboardPage() {
 					Buy
 				</Link>
 			</div>
+			<Suspense fallback={<div>Loading...</div>}>
+				<section className="flex justify-center">
+					<CollectionsList />
+				</section>
+			</Suspense>
 		</div>
 	);
 }

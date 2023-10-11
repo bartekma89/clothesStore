@@ -9,7 +9,7 @@ export const metadata = {
 	title: "Products Page",
 };
 
-export default async function Home() {
+export default async function ProductsPage() {
 	const { hasNextPage, hasPreviousPage } = await getPagination(0);
 
 	const products = await getProducts(10, 0);
@@ -22,7 +22,9 @@ export default async function Home() {
 				hasNextPage={hasNextPage}
 			/>
 			<Suspense fallback={<div>Loading...</div>}>
-				<ProductList products={products} />
+				<section>
+					<ProductList products={products} />
+				</section>
 			</Suspense>
 		</>
 	);
