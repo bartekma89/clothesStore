@@ -10740,9 +10740,9 @@ export type ProductGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string }> } | null };
+export type ProductGetByIdQuery = { product?: { id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string, width?: number | null, height?: number | null }> } | null };
 
-export type ProductListItemFragment = { id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string }> };
+export type ProductListItemFragment = { id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string, width?: number | null, height?: number | null }> };
 
 export type ProductsGetByCategoriesQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -10757,7 +10757,7 @@ export type ProductsGetListQueryVariables = Exact<{
 }>;
 
 
-export type ProductsGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string }> }> };
+export type ProductsGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string, width?: number | null, height?: number | null }> }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10784,6 +10784,8 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   }
   images(first: 1) {
     url
+    width
+    height
   }
   price
 }
@@ -10851,6 +10853,8 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
   }
   images(first: 1) {
     url
+    width
+    height
   }
   price
 }`) as unknown as TypedDocumentString<ProductGetByIdQuery, ProductGetByIdQueryVariables>;
@@ -10890,6 +10894,8 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
   images(first: 1) {
     url
+    width
+    height
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;

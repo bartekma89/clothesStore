@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { Rubik } from "next/font/google";
 
 import { Footer } from "@/components/atoms";
-import { Header } from "@/components/organisms";
+import { FeaturedProducts, Header } from "@/components/organisms";
 
 import "./globals.css";
 
@@ -25,6 +25,7 @@ export default function RootLayout({
 						<Header />
 						<div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 							{children}
+							<FeaturedProducts />
 						</div>
 						<Footer />
 					</section>
