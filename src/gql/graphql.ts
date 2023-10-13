@@ -10751,6 +10751,13 @@ export type ProductsGetByCategoriesQueryVariables = Exact<{
 
 export type ProductsGetByCategoriesQuery = { categories: Array<{ name: string, products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string }> }> }> };
 
+export type ProductsGetByNameQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
+
+
+export type ProductsGetByNameQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ id: string, name: string }>, images: Array<{ url: string, width?: number | null, height?: number | null }> }> };
+
 export type ProductsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -10878,6 +10885,25 @@ export const ProductsGetByCategoriesDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetByCategoriesQuery, ProductsGetByCategoriesQueryVariables>;
+export const ProductsGetByNameDocument = new TypedDocumentString(`
+    query ProductsGetByName($query: String!) {
+  products(where: {name_contains: $query}) {
+    id
+    name
+    description
+    categories(first: 1) {
+      id
+      name
+    }
+    images(first: 1) {
+      url
+      width
+      height
+    }
+    price
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsGetByNameQuery, ProductsGetByNameQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList($skip: Int, $take: Int) {
   products(skip: $skip, first: $take) {

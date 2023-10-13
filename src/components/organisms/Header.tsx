@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Navbar } from "../molecules";
+import { SearchInput } from "./SearchInput";
 
 export function Header() {
 	return (
@@ -13,6 +14,7 @@ export function Header() {
 
 				<div className="flex flex-1 items-center justify-end md:justify-between">
 					<Navbar />
+					<SearchInput />
 				</div>
 			</div>
 		</header>

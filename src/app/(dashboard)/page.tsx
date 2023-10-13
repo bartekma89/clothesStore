@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { Suspense } from "react";
 
-import { CollectionsList, FeaturedProducts } from "@/components/organisms";
+import { CollectionsList } from "@/components/organisms";
 
 export const metadata = {
 	title: "Products Page",
@@ -24,11 +24,6 @@ export default async function DashboardPage() {
 			<Suspense fallback={<div>Loading...</div>}>
 				<section className="flex justify-center">
 					<CollectionsList />
-				</section>
-			</Suspense>
-			<Suspense fallback={<div>Loading...</div>}>
-				<section className="flex justify-center">
-					<FeaturedProducts />
 				</section>
 			</Suspense>
 		</div>

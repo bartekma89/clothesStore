@@ -20,6 +20,7 @@ const documents = {
     "query ProductGetById($id: ID!) {\n  product(where: {id: $id}) {\n    ...ProductListItem\n  }\n}": types.ProductGetByIdDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  description\n  categories(first: 1) {\n    id\n    name\n  }\n  images(first: 1) {\n    url\n    width\n    height\n  }\n  price\n}": types.ProductListItemFragmentDoc,
     "query ProductsGetByCategories($slug: String!) {\n  categories(where: {slug: $slug}) {\n    name\n    products {\n      id\n      name\n      description\n      categories(first: 1) {\n        id\n        name\n      }\n      images(first: 1) {\n        url\n      }\n      price\n    }\n  }\n}": types.ProductsGetByCategoriesDocument,
+    "query ProductsGetByName($query: String!) {\n  products(where: {name_contains: $query}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      id\n      name\n    }\n    images(first: 1) {\n      url\n      width\n      height\n    }\n    price\n  }\n}": types.ProductsGetByNameDocument,
     "query ProductsGetList($skip: Int, $take: Int) {\n  products(skip: $skip, first: $take) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
 };
 
@@ -47,6 +48,10 @@ export function graphql(source: "fragment ProductListItem on Product {\n  id\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetByCategories($slug: String!) {\n  categories(where: {slug: $slug}) {\n    name\n    products {\n      id\n      name\n      description\n      categories(first: 1) {\n        id\n        name\n      }\n      images(first: 1) {\n        url\n      }\n      price\n    }\n  }\n}"): typeof import('./graphql').ProductsGetByCategoriesDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductsGetByName($query: String!) {\n  products(where: {name_contains: $query}) {\n    id\n    name\n    description\n    categories(first: 1) {\n      id\n      name\n    }\n    images(first: 1) {\n      url\n      width\n      height\n    }\n    price\n  }\n}"): typeof import('./graphql').ProductsGetByNameDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

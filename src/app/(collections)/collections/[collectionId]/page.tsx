@@ -20,8 +20,6 @@ export default async function CollectionsPage({
 		return notFound();
 	}
 
-	console.log(collection);
-
 	return (
 		<section>
 			<div className="relative h-[350px] sm:h-[450px]">
