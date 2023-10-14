@@ -1,22 +1,16 @@
 import NextImage from "next/image";
 import { type Metadata } from "next";
 
-import { getProduct, getProducts } from "@/lib/api/products";
+import { getProduct } from "@/lib/api/products";
 import { formatNumber } from "@/lib/formatNumber";
+
+export const fetchCache = "default-cache";
 
 type ParamsProps = {
 	params: {
 		productId: string;
 	};
 };
-
-export async function generateStaticParams() {
-	const products = await getProducts(10, 0);
-
-	return products.map(({ id }) => ({
-		productId: id,
-	}));
-}
 
 export async function generateMetadata({
 	params,
