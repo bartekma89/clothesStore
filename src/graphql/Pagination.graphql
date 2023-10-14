@@ -1,0 +1,11 @@
+query Pagination($skip: Int!, $take: Int) {
+	productsConnection(skip: $skip, first: $take) {
+		pageInfo {
+			hasNextPage
+			hasPreviousPage
+			startCursor
+			endCursor
+			pageSize
+		}
+	}
+}

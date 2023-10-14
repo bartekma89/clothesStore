@@ -1,28 +1,66 @@
-import { type ProductListType } from "@/types";
+import { notFound } from "next/navigation";
 
-export const getProducts = async (take?: string, offset?: string) => {
-	const url = new URL("https://naszsklep-api.vercel.app/api/products");
+import { gql, type TypedDocumentNode } from "@apollo/client";
+import { getClient } from "./apolloClient";
+import { executeGraphql } from "@/lib/api/executeGraphql";
+import {
+	ProductsGetListDocument,
+	ProductGetByIdDocument,
+	type ProductsGetByNameQuery,
+} from "@/gql/graphql";
 
-	if (take) {
-		url.searchParams.set("take", String(take));
-	}
-	if (offset) {
-		url.searchParams.set("offset", String(offset));
-	}
-	const res = await fetch(
-		url.href,
+export const getProducts = async (take?: number, skip?: number) => {
+	const { products } = await executeGraphql(ProductsGetListDocument, {
+		take,
+		skip,
+	});
 
-		{
-			cache: "no-cache",
-		},
-	);
-
-	return res.json() as Promise<ProductListType[]>;
+	return products;
 };
 
 export async function getProduct(id: string) {
-	const res = await fetch(
-		`https://naszsklep-api.vercel.app/api/products/${id}`,
-	);
-	return res.json() as Promise<ProductListType>;
+	const { product } = await executeGraphql(ProductGetByIdDocument, {
+		id,
+	});
+
+	if (!product) {
+		throw notFound();
+	}
+
+	return product;
+}
+
+const PRODUCTS_GET_BY_NAME: TypedDocumentNode<ProductsGetByNameQuery> = gql`
+	query ProductsGetByName($query: String!) {
+		products(where: { name_contains: $query }) {
+			id
+			name
+			description
+			categories(first: 1) {
+				id
+				name
+			}
+			images(first: 1) {
+				url
+				width
+				height
+			}
+			price
+		}
+	}
+`;
+
+export async function getProductByName(name: string) {
+	const { data } = await getClient().query({
+		query: PRODUCTS_GET_BY_NAME,
+		variables: {
+			query: name,
+		},
+	});
+
+	if (!data) {
+		throw TypeError("No data");
+	}
+
+	return data.products;
 }

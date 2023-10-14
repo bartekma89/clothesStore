@@ -12,6 +12,7 @@ export function Navbar() {
 								className="text-gray-500 transition hover:text-gray-500/75"
 								activeClassName="underline underline-offset-4"
 								href={href}
+								exact={href === "/products" ? false : true}
 							>
 								{name}
 							</ActiveLink>

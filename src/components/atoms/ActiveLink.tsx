@@ -23,9 +23,7 @@ export function ActiveLink<T extends string>({
 }: ComponentProps<T>) {
 	const pathname = usePathname();
 
-	const isActive = exact
-		? pathname === href && pathname.startsWith(href)
-		: false;
+	const isActive = exact ? pathname === href : pathname.startsWith(href);
 
 	return (
 		<Link className={clsx(className, isActive && activeClassName)} href={href}>

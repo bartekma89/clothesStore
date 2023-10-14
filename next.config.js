@@ -1,10 +1,22 @@
+// const withMDX = require("@next/mdx");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	experimental: {
-		typedRoutes: true,
+		typedRoutes: false,
 		mdxRs: true,
+	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "media.graphassets.com",
+				pathname: "/**",
+				port: "",
+			},
+		],
 	},
 };
 
-const withMDX = require("@next/mdx");
-module.exports = withMDX(nextConfig);
+// module.exports = withMDX(nextConfig);
+module.exports = nextConfig;
