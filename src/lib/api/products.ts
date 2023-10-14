@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 
+import { gql, type TypedDocumentNode } from "@apollo/client";
+import { getClient } from "./apolloClient";
 import { executeGraphql } from "@/lib/api/executeGraphql";
 import {
 	ProductsGetListDocument,
 	ProductGetByIdDocument,
-	ProductsGetByNameDocument,
+	type ProductsGetByNameQuery,
 } from "@/gql/graphql";
 
 export const getProducts = async (take?: number, skip?: number) => {
@@ -28,10 +30,37 @@ export async function getProduct(id: string) {
 	return product;
 }
 
+const PRODUCTS_GET_BY_NAME: TypedDocumentNode<ProductsGetByNameQuery> = gql`
+	query ProductsGetByName($query: String!) {
+		products(where: { name_contains: $query }) {
+			id
+			name
+			description
+			categories(first: 1) {
+				id
+				name
+			}
+			images(first: 1) {
+				url
+				width
+				height
+			}
+			price
+		}
+	}
+`;
+
 export async function getProductByName(name: string) {
-	const { products } = await executeGraphql(ProductsGetByNameDocument, {
-		query: name,
+	const { data } = await getClient().query({
+		query: PRODUCTS_GET_BY_NAME,
+		variables: {
+			query: name,
+		},
 	});
 
-	return products;
+	if (!data) {
+		throw TypeError("No data");
+	}
+
+	return data.products;
 }
