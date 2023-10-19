@@ -17,12 +17,14 @@ export const executeGraphql = async <TResult, TVariables>(
 		}),
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
 
 	const graphqlResponse = (await res.json()) as GraphqlResponse<TResult>;
 
 	if (graphqlResponse.errors) {
+		console.log(graphqlResponse.errors);
 		throw TypeError("Graphql Errors", {
 			cause: graphqlResponse.errors,
 		});

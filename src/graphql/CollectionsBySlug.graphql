@@ -4,11 +4,6 @@ query CollectionGetBySlug($collectionId: String!) {
 		name
 		description
 
-		image {
-			width
-			height
-			url
-		}
 		products {
 			id
 			name
