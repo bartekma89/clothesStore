@@ -18,6 +18,7 @@ const documents = {
     "mutation CartCreate {\n  createOrder(data: {email: \"bart@bart.test\", total: 0, stripeCheckoutId: \"\"}) {\n    ...CartId\n  }\n}": types.CartCreateDocument,
     "query CartGetById($id: ID!) {\n  order(where: {id: $id}, stage: DRAFT) {\n    ...CartId\n    orderItems {\n      total\n      quantity\n      product {\n        ...ProductListItem\n      }\n    }\n  }\n}": types.CartGetByIdDocument,
     "fragment CartId on Order {\n  id\n}": types.CartIdFragmentDoc,
+    "mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {\n  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {\n    id\n  }\n}": types.CartSetProductQuantityDocument,
     "query CollectionGetBySlug($collectionId: String!) {\n  collections(where: {slug: $collectionId}) {\n    id\n    name\n    description\n    products {\n      id\n      name\n      price\n      slug\n      images {\n        width\n        height\n        url\n      }\n    }\n  }\n}": types.CollectionGetBySlugDocument,
     "query CollectionsGetList {\n  collections {\n    id\n    name\n    slug\n  }\n}": types.CollectionsGetListDocument,
     "query Pagination($skip: Int!, $take: Int) {\n  productsConnection(skip: $skip, first: $take) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n      pageSize\n    }\n  }\n}": types.PaginationDocument,
@@ -44,6 +45,10 @@ export function graphql(source: "query CartGetById($id: ID!) {\n  order(where: {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "fragment CartId on Order {\n  id\n}"): typeof import('./graphql').CartIdFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {\n  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {\n    id\n  }\n}"): typeof import('./graphql').CartSetProductQuantityDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

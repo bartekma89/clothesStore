@@ -4,6 +4,7 @@ import { Trash2 as Trash } from "lucide-react";
 
 import { getCartByCookies } from "@/lib/api/cart";
 import { formatNumber } from "@/lib/formatNumber";
+import { ChangeQuantity } from "@/components/atoms";
 
 export default async function CartPage() {
 	const cart = await getCartByCookies();
@@ -16,10 +17,6 @@ export default async function CartPage() {
 		if (!cur) {
 			return acc;
 		}
-
-		console.log(acc);
-		console.log(cur);
-		console.log("----");
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return acc + cur.total;
@@ -38,6 +35,9 @@ export default async function CartPage() {
 					<div className="mt-8">
 						<ul className="space-y-4">
 							{cart?.orderItems.map((item) => {
+								if (!item.product) {
+									return null;
+								}
 								return (
 									<li
 										className="flex items-center gap-4"
@@ -69,13 +69,12 @@ export default async function CartPage() {
 										</div>
 
 										<div className="flex flex-1 items-center justify-end gap-2">
-											<form>
-												<div className="sr-only"> Quantity </div>
+											<div className="sr-only"> Quantity </div>
 
-												<div className="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xl text-gray-600">
-													{item.quantity}
-												</div>
-											</form>
+											<ChangeQuantity
+												quantity={item.quantity}
+												itemId={item.product.id}
+											/>
 
 											<button className="text-gray-600 transition hover:text-red-600">
 												<span className="sr-only">Remove item</span>

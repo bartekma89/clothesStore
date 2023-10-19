@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-// @ts-ignore
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 export function AddToCartButton() {

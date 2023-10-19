@@ -10704,6 +10704,14 @@ export type CartGetByIdQuery = { order?: { id: string, orderItems: Array<{ total
 
 export type CartIdFragment = { id: string };
 
+export type CartSetProductQuantityMutationVariables = Exact<{
+  itemId: Scalars['ID']['input'];
+  quantity: Scalars['Int']['input'];
+}>;
+
+
+export type CartSetProductQuantityMutation = { updateOrderItem?: { id: string } | null };
+
 export type CollectionGetBySlugQueryVariables = Exact<{
   collectionId: Scalars['String']['input'];
 }>;
@@ -10840,6 +10848,13 @@ fragment ProductListItem on Product {
   }
   price
 }`) as unknown as TypedDocumentString<CartGetByIdQuery, CartGetByIdQueryVariables>;
+export const CartSetProductQuantityDocument = new TypedDocumentString(`
+    mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {
+  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CartSetProductQuantityMutation, CartSetProductQuantityMutationVariables>;
 export const CollectionGetBySlugDocument = new TypedDocumentString(`
     query CollectionGetBySlug($collectionId: String!) {
   collections(where: {slug: $collectionId}) {
