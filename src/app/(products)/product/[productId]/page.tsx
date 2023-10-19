@@ -1,6 +1,7 @@
 import NextImage from "next/image";
 import { type Metadata } from "next";
 
+import { revalidateTag } from "next/cache";
 import { getProduct } from "@/lib/api/products";
 import { formatNumber } from "@/lib/formatNumber";
 import { AddToCartButton } from "@/components/atoms";
@@ -36,6 +37,8 @@ export default async function ProductPage({ params }: ParamsProps) {
 		}
 
 		await addProductToCart(cart.id, product.id);
+
+		revalidateTag("cart");
 	};
 
 	return (

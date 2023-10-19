@@ -4,8 +4,15 @@ import { CartSetProductQuantityDocument } from "@/gql/graphql";
 import { executeGraphql } from "@/lib/api/executeGraphql";
 
 export const changeItemQuantity = (itemId: string, quantity: number) => {
-	return executeGraphql(CartSetProductQuantityDocument, {
-		itemId,
-		quantity,
+	console.log(process.env.HYGRAPH_MUTATION_TOKEN);
+	return executeGraphql({
+		query: CartSetProductQuantityDocument,
+		variables: {
+			itemId,
+			quantity,
+		},
+		headers: {
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
+		},
 	});
 };

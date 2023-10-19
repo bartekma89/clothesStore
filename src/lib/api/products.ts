@@ -10,17 +10,23 @@ import {
 } from "@/gql/graphql";
 
 export const getProducts = async (take?: number, skip?: number) => {
-	const { products } = await executeGraphql(ProductsGetListDocument, {
-		take,
-		skip,
+	const { products } = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: {
+			take,
+			skip,
+		},
 	});
 
 	return products;
 };
 
 export async function getProduct(id: string) {
-	const { product } = await executeGraphql(ProductGetByIdDocument, {
-		id,
+	const { product } = await executeGraphql({
+		query: ProductGetByIdDocument,
+		variables: {
+			id,
+		},
 	});
 
 	if (!product) {
