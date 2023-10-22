@@ -27,6 +27,9 @@ export async function getProduct(id: string) {
 		variables: {
 			id,
 		},
+		next: {
+			revalidate: 1,
+		},
 	});
 
 	if (!product) {
