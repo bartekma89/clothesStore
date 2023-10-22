@@ -1,10 +1,9 @@
 import NextImage from "next/image";
 import { redirect } from "next/navigation";
-import { Trash2 as Trash } from "lucide-react";
 
 import { getCartByCookies } from "@/lib/api/cart";
 import { formatNumber } from "@/lib/formatNumber";
-import { ChangeQuantity } from "@/components/atoms";
+import { ChangeQuantity, RemoveButton } from "@/components/atoms";
 
 export default async function CartPage() {
 	const cart = await getCartByCookies();
@@ -21,6 +20,8 @@ export default async function CartPage() {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return acc + cur.total;
 	}, 0);
+
+	console.log(cart.id);
 
 	return (
 		<section>
@@ -76,11 +77,7 @@ export default async function CartPage() {
 												itemId={item.product.id}
 											/>
 
-											<button className="text-gray-600 transition hover:text-red-600">
-												<span className="sr-only">Remove item</span>
-
-												<Trash size={24} />
-											</button>
+											<RemoveButton productId={item.id} />
 										</div>
 									</li>
 								);

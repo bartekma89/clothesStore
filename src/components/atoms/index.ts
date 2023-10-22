@@ -6,3 +6,4 @@ export { ActiveLink } from "./ActiveLink";
 export { AddToCartButton } from "./AddToCartButton";
 export { CartButton } from "./CartButton";
 export { ChangeQuantity } from "./ChangeQuantity";
+export { RemoveButton } from "./RemoveButton";

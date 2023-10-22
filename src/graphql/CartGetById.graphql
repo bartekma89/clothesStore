@@ -3,6 +3,7 @@ query CartGetById($id: ID!) {
 		...CartId
 
 		orderItems {
+			id
 			total
 			quantity
 			product {
