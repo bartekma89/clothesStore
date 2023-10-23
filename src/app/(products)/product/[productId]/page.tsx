@@ -1,10 +1,11 @@
 import NextImage from "next/image";
 import { type Metadata } from "next";
 
+import { revalidateTag } from "next/cache";
 import { getProduct } from "@/lib/api/products";
 import { formatNumber } from "@/lib/formatNumber";
-
-export const fetchCache = "default-cache";
+import { AddToCartButton } from "@/components/atoms";
+import { addProductToCart, getOrCreatCart } from "@/lib/api/cart";
 
 type ParamsProps = {
 	params: {
@@ -25,6 +26,20 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ParamsProps) {
 	const product = await getProduct(params.productId);
+
+	const addProductToCartAction = async () => {
+		"use server";
+
+		const cart = await getOrCreatCart();
+
+		if (!cart) {
+			throw new Error("Failed to get cart");
+		}
+
+		await addProductToCart(cart.id, product.id);
+
+		revalidateTag("cart");
+	};
 
 	return (
 		<section className="body-font overflow-hidden text-gray-600">
@@ -53,13 +68,13 @@ export default async function ProductPage({ params }: ParamsProps) {
 								<button className="ml-1 h-6 w-6 rounded-full border-2 border-gray-300 bg-indigo-500 focus:outline-none"></button>
 							</div>
 						</div>
-						<div className="flex">
+						<div className="flex justify-between">
 							<span className="title-font text-2xl font-medium text-gray-900">
 								{formatNumber(product.price)}
 							</span>
-							<button className="ml-auto flex rounded border-0 bg-indigo-500 px-6 py-2 text-white hover:bg-indigo-600 focus:outline-none">
-								Button
-							</button>
+							<form action={addProductToCartAction}>
+								<AddToCartButton />
+							</form>
 						</div>
 					</div>
 				</div>

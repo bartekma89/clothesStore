@@ -22,18 +22,6 @@ export default async function CollectionsPage({
 
 	return (
 		<section>
-			<div className="relative h-[350px] sm:h-[450px]">
-				{collection[0]?.image && (
-					<NextImage
-						src={collection[0].image.url ?? ""}
-						alt={collection[0].name ?? ""}
-						width={collection[0]?.image.width ?? 320}
-						height={collection[0]?.image.height ?? 320}
-						className="absolute inset-0 h-full w-full object-cover"
-					/>
-				)}
-			</div>
-
 			<div className="mt-3">
 				<h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
 					{collection[0]?.name}

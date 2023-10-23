@@ -1,0 +1,7 @@
+mutation CartCreate {
+	createOrder(
+		data: { email: "bart@bart.test", total: 0, stripeCheckoutId: "" }
+	) {
+		...CartId
+	}
+}
